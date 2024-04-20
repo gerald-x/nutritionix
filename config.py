@@ -9,3 +9,4 @@ SECRET_KEY = "@final/year"
 DEBUG=True
 JWT_TOKEN_LOCATION = ["cookies"]
 JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
+JWT_COOKIE_SECURE = False
