@@ -12,14 +12,14 @@ import { AuthOutlet } from "../Components"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-            <>
-                <Route path="/auth/" element={ <AuthOutlet /> }>
-                    <Route index path="login" element={ <LoginView />} />
-                    <Route path="signup" element={ <SignUp />} />
-                </Route>
+        <>
+            <Route path="/auth/" element={ <AuthOutlet /> }>
+                <Route index path="login" element={ <LoginView />} />
+                <Route path="signup" element={ <SignUp />} />
+            </Route>
 
-                <Route path="/" element={ <Overview /> } />
-            </>
+            <Route path="/" element={ <Overview /> } />
+        </>
     )
 )
 
