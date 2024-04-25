@@ -1,6 +1,17 @@
 import { Navbar, Container, Offcanvas, Nav, NavDropdown } from "react-bootstrap"
+import { FiLogOut } from "react-icons/fi";
+import useLogout from "../Hooks/useLogout";
+import { useState } from "react";
+
 
 const TopNav = ({additionalClasses})=>{
+    const [click, setClick] = useState(false)
+
+    const handleLogout = () => {
+        setClick(true)
+    }
+
+    useLogout(click)
     return(
         <>
             <Navbar expand={false} className={`${additionalClasses} bg-body-tertiary mb-3`}>
@@ -38,6 +49,10 @@ const TopNav = ({additionalClasses})=>{
                                     
                                     <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
                                 </NavDropdown>
+                                
+                                <Nav.Link className="mt-12" onClick={handleLogout}>
+                                    <FiLogOut className="rotate-180" /> Log Out
+                                </Nav.Link>
                             </Nav>
 
                         </Offcanvas.Body>

@@ -94,7 +94,7 @@ const BmiCalculator = () => {
                 variant="success"
                 onClick={calculateBMI}
             >
-                calculate BMI
+                Calculate BMI
             </Button>
           </Col>
 

@@ -3,13 +3,21 @@ from .models import User
 from blueprints import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from validate_email_address import validate_email
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
 
 auth = Blueprint("auth", __name__)
 
 @auth.route("", methods=["GET", "POST"])
 def index():
     return "hello world!"
+
+
+@auth.route("/token-validate/", methods=["GET"])
+@jwt_required()
+def token_validate():
+    id = get_jwt_identity()
+    print(id)
+    return jsonify(msg="Valid Token")
 
 
 @auth.route("login/", methods=["POST"])
@@ -29,7 +37,7 @@ def login_view():
         return jsonify({"msg": "User doesn't exists"}), 400
     
     if not check_password_hash(user.password, password):
-        return jsonify({"msg": "Password deos not match"}), 400
+        return jsonify({"msg": "Password does not match"}), 400
 
     access_token = create_access_token(identity=user.id)
     refresh_token = create_refresh_token(identity=user.id)

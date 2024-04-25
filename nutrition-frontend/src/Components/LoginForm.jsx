@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { storeAccesstoken, storeRefreshToken } from "../Store/appSlice";
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { accessToken, refreshToken } = useSelector(state => state.appData)
+  const [error, setError] = useState(null)
+
+
+  useEffect(() => {
+    console.log(accessToken,"\n", refreshToken)
+  }, [accessToken])
+
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
@@ -28,15 +41,23 @@ const LoginForm = () => {
         },
         body: JSON.stringify(loginDetails),
       });
+      const data = await response.json();
 
-      /*
+
         if (!response.ok) {
+            setError(data.msg)
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-      */
+      
+      console.log("Data variable is: ", data)
+      const {access_token, refresh_token} = data
+      
+      dispatch(storeAccesstoken(access_token)); // Assuming the response contains an accessToken field
+      dispatch(storeRefreshToken(refresh_token))
+      
+      console.log("Token retrieved")
 
-      const data = await response.json();
-      console.log(data); // Assuming the response contains an accessToken field
+      navigate("/")
     } catch (error) {
       console.error("There was an error!", error);
     }
@@ -58,7 +79,7 @@ const LoginForm = () => {
         </Form.Text>
       </Form.Group>
 
-      <Form.Group className="mb-4" controlId="formBasicPassword">
+      <Form.Group className="" controlId="formBasicPassword">
         <Form.Label className="block w-max">Password</Form.Label>
         <Form.Control
           variant="success"
@@ -67,6 +88,16 @@ const LoginForm = () => {
           value={password}
           onChange={handlePassword}
         />
+      </Form.Group>
+
+      <Form.Group className="mb-4" controlId="formBasicPassword">
+        {
+            error && (
+            <Form.Text className="text-danger">
+                {error}
+            </Form.Text>
+            )
+        }
       </Form.Group>
 
       <Form.Group className="mb-4" controlId="formBasicPassword">

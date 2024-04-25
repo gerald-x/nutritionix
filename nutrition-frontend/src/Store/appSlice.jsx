@@ -23,11 +23,16 @@ export const appSlice = createSlice({
         // which detects changes to a "draft state" and produces a brand new
         // immutable state based off those changes
         state.refreshToken = action.payload
-      },
+    },
+
+    clearTokens: (state) => {
+        state.refreshToken = null
+        state.accessToken = null
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { storeAccesstoken, storeRefreshToken } = appSlice.actions
+export const { storeAccesstoken, storeRefreshToken, clearTokens } = appSlice.actions
 
 export default appSlice.reducer
