@@ -106,14 +106,16 @@ const LoginForm = () => {
         </Form.Text>
       </Form.Group>
 
-      <Button 
-        className="w-1/2" 
-        variant="success" 
-        type="submit"
-        onClick={handleLogin}
-      >
-        Submit
-      </Button>
+        <div className="w-3/4 mx-auto">
+            <Button 
+                className="w-full"
+                variant="success" 
+                type="submit"
+                onClick={handleLogin}
+            >
+                Submit
+            </Button>
+        </div>
     </div>
   );
 };

@@ -9,11 +9,14 @@ const usePost = () => {
 
     const postData = async (url, payload, auth=false) => {
       setIsLoading(true);
-      const extras = {Authorization: `Bearer ${accessToken}`} ? auth : {}
+      const extras = auth ? {Authorization: `Bearer ${accessToken}`} : {}
       try {
         const response = await fetch(url, {
             method: "POST",
-            headers: extras,
+            headers: {
+                'Content-Type': 'application/json',
+                ...extras
+            },
             body: JSON.stringify(payload)
         });
         const jsonData = await response.json();
@@ -24,11 +27,11 @@ const usePost = () => {
             throw new Error(`HTTP error! status: ${response.status}. Details: ${jsonData.msg}`);
         } else {
             setData(jsonData);
+            setError(null)
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data: ', error);
         setIsLoading(false);
-        setError(error)
       }
     };
   

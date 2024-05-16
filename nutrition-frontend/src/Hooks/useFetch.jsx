@@ -2,14 +2,16 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const useFetch = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null)
     const {accessToken} = useSelector(state => state.appData)
   
     const fetchData = async (url, auth=false) => {
         setIsLoading(true);
-        const extras = {Authorization: `Bearer ${accessToken}`} ? auth : {}
+        const extras = auth ? {Authorization: `Bearer ${accessToken}`} : {}
+
+        console.log(auth, extras)
         try {
             const response = await fetch(url, {
                 method: "GET",
@@ -27,7 +29,6 @@ const useFetch = () => {
         } catch (error) {
             console.error('Error fetching data:', error);
             setIsLoading(false);
-            setError(error)
         }
     };
   
