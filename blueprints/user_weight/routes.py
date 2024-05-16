@@ -10,10 +10,10 @@ user_weight = Blueprint("user_weight", __name__)
 @jwt_required()
 def submit_weight():
     user_id = get_jwt_identity()
-    weight = request.json.get('weight', None)
+    weight = request.json.get('weight', None).strip()
     date_str = request.json.get('date', None)
     
-    if weight is None or date_str is None:
+    if not weight or not date_str:
         return jsonify({"msg": "Missing weight or date"}), 400
     
     try:
@@ -24,8 +24,9 @@ def submit_weight():
 
     formatted_date = date.fromisoformat(date_str)
 
-    if formatted_date == datetime.now().date():
-        weight_entry = UserWeight.query.filter_by(user_id=user_id, date=formatted_date).first()
+    weight_entry = UserWeight.query.filter_by(user_id=user_id, date=formatted_date).first()
+        
+    if weight_entry: 
         weight_entry.weight = formatted_weight
         db.session.commit()
         return jsonify(msg="Weight recorded successfully")
