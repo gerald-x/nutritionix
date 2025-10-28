@@ -1,6 +1,5 @@
-===========
 # nutritionix
-
+A personal nutrition app designed using Flask for the backend and create-react-app for the frontend
 
 
 ===========
