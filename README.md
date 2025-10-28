@@ -1,9 +1,8 @@
-# nutritionix
-A personal nutrition app designed using Flask for the backend and create-react-app for the frontend
+# Nutritionix
+A personal nutrition app designed using `Flask` for the backend and `create-react-app` for the frontend
 
-
-===========
-To run the frontend follow the below:
+## The Backend
+The backend is the api the frontend runs on. To run the backend is fairly simple. Either set the `FLASK_APP` env variabe to `run.py` or run `python run.py` in your terminal
 
 
 # Getting Started with Create React App
